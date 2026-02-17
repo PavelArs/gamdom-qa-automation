@@ -1,6 +1,17 @@
 import { defineConfig, devices } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
-// Bun automatically loads .env files — no manual dotenv setup required
+// Load .env without external dependencies — works with bun, node, and CI
+try {
+  const envFile = readFileSync(resolve(process.cwd(), '.env'), 'utf-8');
+  for (const line of envFile.split('\n')) {
+    const match = line.match(/^([^#=]+)=(.*)$/);
+    if (match) process.env[match[1]!.trim()] ??= match[2]!.trim();
+  }
+} catch {
+  // .env not present (e.g., CI) — rely on system environment variables
+}
 
 export default defineConfig({
   timeout: 30_000,

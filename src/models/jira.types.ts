@@ -43,8 +43,7 @@ export interface IssueResponse {
 }
 
 export interface SearchResponse {
-  startAt: number;
-  maxResults: number;
-  total: number;
   issues: IssueResponse[];
+  nextPageToken?: string;
+  isLast: boolean;
 }

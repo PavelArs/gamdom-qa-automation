@@ -1,8 +1,14 @@
 {
-  "name": "gamdom",
-  "module": "index.ts",
+  "name": "gamdom-qa-automation",
   "type": "module",
   "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --project=ui",
+    "test:api": "playwright test --project=api",
+    "test:headed": "playwright test --project=ui --headed",
+    "report": "playwright show-report"
+  },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@types/bun": "latest"

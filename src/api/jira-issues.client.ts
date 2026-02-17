@@ -26,9 +26,10 @@ export class JiraIssuesClient extends BaseApiClient {
   }
 
   async searchIssues(jql: string, maxResults = 10): Promise<{ status: number; body: SearchResponse }> {
-    return this.get<SearchResponse>('/rest/api/3/search', {
+    return this.get<SearchResponse>('/rest/api/3/search/jql', {
       jql,
       maxResults: maxResults.toString(),
+      fields: 'summary,priority,labels,status',
     });
   }
 }
