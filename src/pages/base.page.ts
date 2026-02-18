@@ -7,6 +7,8 @@ export abstract class BasePage {
 
   async navigate(): Promise<void> {
     await this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
+    // Wait for SPA hydration — the site uses client-side rendering
+    await this.page.waitForLoadState('load');
   }
 
   async getTitle(): Promise<string> {

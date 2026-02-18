@@ -1,5 +1,5 @@
-import { test, expect } from '../../src/fixtures/api.fixture';
-import { IssueBuilder } from '../../src/helpers/test-data.builder';
+import { test, expect } from '@fixtures/api.fixture';
+import { IssueBuilder } from '@helpers/test-data.builder';
 
 test.describe.serial('JIRA Issues — CRUD Workflow', () => {
   const projectKey = process.env.JIRA_PROJECT_KEY || 'DEV';
@@ -44,7 +44,6 @@ test.describe.serial('JIRA Issues — CRUD Workflow', () => {
 
     expect(status).toBe(204);
 
-    // Verify update persisted
     const { body } = await jiraIssues.getIssue(createdIssueKey);
     expect(body.fields.summary).toBe(updatedSummary);
     expect(body.fields.priority.name).toBe('High');
@@ -58,21 +57,16 @@ test.describe.serial('JIRA Issues — CRUD Workflow', () => {
     await expect(async () => {
       const { status, body } = await jiraIssues.searchIssues(jql);
       expect(status).toBe(200);
-      expect(body.issues.length).toBeGreaterThanOrEqual(1);
+      const found = body.issues.find((i) => i.key === createdIssueKey);
+      expect(found).toBeDefined();
+      expect(found!.fields.priority.name).toBe('High');
     }).toPass({ timeout: 15_000, intervals: [1_000, 2_000, 3_000] });
-
-    // Final assertion with field validation
-    const { body } = await jiraIssues.searchIssues(jql);
-    const found = body.issues.find((i) => i.key === createdIssueKey);
-    expect(found).toBeDefined();
-    expect(found!.fields.priority.name).toBe('High');
   });
 
   test('DELETE /issue/{key} — should delete issue and confirm removal', async ({ jiraIssues }) => {
     const { status } = await jiraIssues.deleteIssue(createdIssueKey);
     expect(status).toBe(204);
 
-    // Verify deletion returns 404
     const { status: getStatus } = await jiraIssues.getIssue(createdIssueKey);
     expect(getStatus).toBe(404);
   });

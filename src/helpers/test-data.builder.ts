@@ -1,4 +1,4 @@
-import type { CreateIssuePayload, AdfDocument } from '../models/jira.types';
+import type { CreateIssuePayload, AdfDocument } from '@models/jira.types';
 
 export class IssueBuilder {
   private payload: CreateIssuePayload;

@@ -4,7 +4,7 @@ import type {
   UpdateIssuePayload,
   IssueResponse,
   SearchResponse,
-} from '../models/jira.types';
+} from '@models/jira.types';
 
 export class JiraIssuesClient extends BaseApiClient {
   private readonly basePath = '/rest/api/3/issue';

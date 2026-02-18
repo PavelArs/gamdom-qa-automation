@@ -1,6 +1,6 @@
 import type { Page, Locator } from '@playwright/test';
 import { BasePage } from './base.page';
-import { HeaderComponent } from '../components/header.component';
+import { HeaderComponent } from '@components/header.component';
 
 export class SportsPage extends BasePage {
   readonly url = '/sports';

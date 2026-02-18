@@ -1,5 +1,5 @@
 import { test as base } from '@playwright/test';
-import { JiraIssuesClient } from '../api/jira-issues.client';
+import { JiraIssuesClient } from '@api/jira-issues.client';
 
 type ApiFixtures = {
   jiraIssues: JiraIssuesClient;

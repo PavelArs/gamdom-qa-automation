@@ -1,6 +1,6 @@
 import { test as base } from '@playwright/test';
-import { HomePage } from '../pages/home.page';
-import { SportsPage } from '../pages/sports.page';
+import { HomePage } from '@pages/home.page';
+import { SportsPage } from '@pages/sports.page';
 
 type UiFixtures = {
   homePage: HomePage;

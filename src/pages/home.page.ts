@@ -1,8 +1,8 @@
 import type { Page, Locator } from '@playwright/test';
 import { BasePage } from './base.page';
-import { HeaderComponent } from '../components/header.component';
-import { CookieBannerComponent } from '../components/cookie-banner.component';
-import { SearchComponent } from '../components/search.component';
+import { HeaderComponent } from '@components/header.component';
+import { CookieBannerComponent } from '@components/cookie-banner.component';
+import { SearchComponent } from '@components/search.component';
 
 export class HomePage extends BasePage {
   readonly url = '/';

@@ -1,4 +1,4 @@
-import { test, expect } from '../../src/fixtures/ui.fixture';
+import { test, expect } from '@fixtures/ui.fixture';
 
 test.describe('Homepage — Critical Elements', () => {
   test.beforeEach(async ({ homePage }) => {
@@ -9,7 +9,8 @@ test.describe('Homepage — Critical Elements', () => {
     await expect(homePage.header.logo).toBeVisible();
     await expect(homePage.header.casinoLink).toBeVisible();
     await expect(homePage.header.sportsLink).toBeVisible();
-    await expect(homePage.header.loginButton).toBeVisible();
+    await expect(homePage.header.signInButton).toBeVisible();
+    await expect(homePage.header.createAccountButton).toBeVisible();
   });
 
   test('should display game offerings and page structure', async ({ homePage }) => {

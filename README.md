@@ -37,9 +37,6 @@ bun run test:ui
 # Run only API tests
 bun run test:api
 
-# Run with headed browser (UI tests)
-bun run test:headed
-
 # Run a specific test file
 bunx playwright test tests/api/jira-issues.spec.ts
 

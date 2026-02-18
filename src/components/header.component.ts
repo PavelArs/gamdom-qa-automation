@@ -1,29 +1,32 @@
 import type { Page, Locator } from '@playwright/test';
 
 export class HeaderComponent {
-  readonly container: Locator;
   readonly logo: Locator;
+  readonly signInButton: Locator;
+  readonly createAccountButton: Locator;
   readonly casinoLink: Locator;
   readonly sportsLink: Locator;
-  readonly loginButton: Locator;
 
   constructor(private readonly page: Page) {
-    this.container = page.locator('header, nav, [class*="header"], [class*="navbar"]').first();
-    this.logo = this.container.locator('a[href="/"], img[alt*="gamdom" i], [class*="logo"]').first();
-    this.casinoLink = page.getByRole('link', { name: /casino/i }).first();
-    this.sportsLink = page.getByRole('link', { name: /sports/i }).first();
-    this.loginButton = page.getByRole('button', { name: /log\s?in|sign\s?in/i }).first();
+    this.logo = page.locator('a[href="/"]').first();
+    this.signInButton = page.getByText('Sign in').first();
+    this.createAccountButton = page.getByText('Create Account').first();
+
+    this.casinoLink = page.locator('a[href*="casino"], a:has-text("Casino")').first();
+    this.sportsLink = page.locator('a[href*="sport"], a:has-text("Sports")').first();
   }
 
   async navigateToCasino(): Promise<void> {
     await this.casinoLink.click();
+    await this.page.waitForLoadState('load');
   }
 
   async navigateToSports(): Promise<void> {
     await this.sportsLink.click();
+    await this.page.waitForLoadState('load');
   }
 
-  async clickLogin(): Promise<void> {
-    await this.loginButton.click();
+  async clickSignIn(): Promise<void> {
+    await this.signInButton.click();
   }
 }
