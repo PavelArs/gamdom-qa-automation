@@ -51,7 +51,7 @@ Each page is represented by a class that encapsulates its selectors and interact
 
 ### Component Composition
 
-Rather than creating deep inheritance hierarchies, page objects **compose** reusable components. For example, `HomePage` contains a `HeaderComponent`, `CookieBannerComponent`, and `SearchComponent`. This mirrors how modern UIs are built (component trees) and avoids the "god page object" anti-pattern.
+Rather than creating deep inheritance hierarchies, page objects **compose** reusable components. For example, `HomePage` contains a `HeaderComponent`, and `SearchComponent`. This mirrors how modern UIs are built (component trees) and avoids the "god page object" anti-pattern.
 
 ### Custom Playwright Fixtures
 
