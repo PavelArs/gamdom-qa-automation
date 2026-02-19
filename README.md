@@ -43,38 +43,6 @@ bunx playwright test tests/api/jira-issues.spec.ts
 # View HTML report
 bun run report
 ```
-
-## Project Structure
-
-```
-├── src/
-│   ├── pages/              # Page Object classes
-│   │   ├── base.page.ts    # Abstract base with shared navigation/wait helpers
-│   │   ├── home.page.ts    # Homepage — composes Header, CookieBanner, Search
-│   │   └── sports.page.ts  # Sports betting section
-│   ├── components/         # Reusable UI component abstractions
-│   │   ├── header.component.ts
-│   │   ├── cookie-banner.component.ts
-│   │   └── search.component.ts
-│   ├── api/                # API client layer
-│   │   ├── base-api.client.ts    # Abstract base with typed HTTP methods
-│   │   └── jira-issues.client.ts # JIRA Issues endpoints (CRUD)
-│   ├── fixtures/           # Custom Playwright test fixtures
-│   │   ├── ui.fixture.ts   # Injects page objects into UI tests
-│   │   └── api.fixture.ts  # Injects API clients into API tests
-│   ├── models/             # TypeScript type definitions
-│   │   └── jira.types.ts   # JIRA API request/response interfaces
-│   └── helpers/            # Utilities
-│       └── test-data.builder.ts  # Builder pattern for JIRA issue payloads
-├── tests/
-│   ├── ui/                 # UI E2E test specs
-│   └── api/                # API test specs
-├── docs/
-│   ├── exploratory-testing.md  # 5 critical business areas analysis
-│   └── complex-scenario.md     # Complex scenario deep-dive
-└── playwright.config.ts    # Two projects: ui (browser) + api (request-only)
-```
-
 ## Design Patterns
 
 ### Page Object Model (POM)
@@ -116,19 +84,13 @@ That said, for a production-scale framework with hundreds of tests and multiple 
 - The Playwright config already supports `CI` environment variable for retry/worker tuning
 - Add GitHub Actions / GitLab CI pipeline with `bun run test`
 - Use `blob-report` reporter for CI artifact collection
-- Parallelize UI and API projects across CI jobs
+- Parallelize UI and API projects across CI jobs, use sharding
 
 ### Test Data Management
 
-- Extend `IssueBuilder` pattern to other domains (e.g., `UserBuilder`, `BetBuilder`)
 - Consider a test data seeding layer for complex preconditions
-- Implement cleanup hooks (`afterAll`) for API tests that create persistent data
-
-### Environment Management
-
-- `.env.example` documents all required variables
-- Add `.env.staging`, `.env.production` for multi-environment runs
-- Bun loads environment-specific files automatically based on `NODE_ENV`
+- Implement cleanup hooks for API tests that create persistent data
+- Use mocking via `page.route` for third-party APIs
 
 ### Reporting
 
