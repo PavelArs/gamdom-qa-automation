@@ -9,7 +9,7 @@
   },
   "private": true,
   "scripts": {
-    "test": "bunx playwright test",
+    "test": "bunx playwright test --ui",
     "test:ui": "bun run test -- --project=ui",
     "test:api": "bun run test -- --project=api",
     "report": "bunx playwright show-report"

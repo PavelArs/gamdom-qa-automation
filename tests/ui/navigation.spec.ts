@@ -1,15 +1,13 @@
 import { test, expect } from '@fixtures/ui.fixture';
 
-test.describe('Navigation — Main Sections', () => {
-  test.beforeEach(async ({ homePage }) => {
-    await homePage.navigateAndDismissCookies();
-  });
-
-  test('should navigate to Sports section and back to Casino', async ({ homePage, page }) => {
+test.describe('Main Sections', () => {
+  test('should navigate to different sections', async ({ homePage }) => {
     await homePage.header.navigateToSports();
-    await expect(page).toHaveURL(/sport/);
+    await expect.soft(homePage.page).toHaveURL(/sports$/);
 
     await homePage.header.navigateToCasino();
-    await expect(page).toHaveURL(/casino\/$/);
+    await expect.soft(homePage.page).toHaveURL(/casino$/);
+
+    //TODO: Add more assertions for the navigation
   });
 });

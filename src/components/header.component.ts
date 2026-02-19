@@ -1,32 +1,33 @@
-import type { Page, Locator } from '@playwright/test';
+import type { Locator } from '@playwright/test';
 
 export class HeaderComponent {
   readonly logo: Locator;
   readonly signInButton: Locator;
   readonly createAccountButton: Locator;
+
+  readonly originalsLink: Locator;
   readonly casinoLink: Locator;
   readonly sportsLink: Locator;
+  readonly supportLink: Locator;
+  readonly rewardsLink: Locator;
 
-  constructor(private readonly page: Page) {
-    this.logo = page.locator('a[href="/"]').first();
-    this.signInButton = page.getByText('Sign in').first();
-    this.createAccountButton = page.getByText('Create Account').first();
+  constructor(readonly container: Locator) {
+    this.logo = container.locator('[href="/"]').first();
+    this.signInButton = container.getByTestId('signin-nav');
+    this.createAccountButton = container.getByTestId('signup-nav');
 
-    this.casinoLink = page.locator('a[href*="casino"], a:has-text("Casino")').first();
-    this.sportsLink = page.locator('a[href*="sport"], a:has-text("Sports")').first();
-  }
-
-  async navigateToCasino(): Promise<void> {
-    await this.casinoLink.click();
-    await this.page.waitForLoadState('load');
+    this.originalsLink = container.getByTestId('navLink-home');
+    this.casinoLink = container.getByTestId('navLink-casino-link');
+    this.sportsLink = container.getByTestId('navLink-sports-link');
+    this.supportLink = container.getByTestId('navLink-support');
+    this.rewardsLink = container.getByTestId('navLink-rewards');
   }
 
   async navigateToSports(): Promise<void> {
     await this.sportsLink.click();
-    await this.page.waitForLoadState('load');
   }
 
-  async clickSignIn(): Promise<void> {
-    await this.signInButton.click();
+  async navigateToCasino(): Promise<void> {
+    await this.casinoLink.click();
   }
 }

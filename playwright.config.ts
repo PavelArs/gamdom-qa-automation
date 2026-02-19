@@ -8,7 +8,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 2 : '50%',
+  workers: 1, // rate limiting on prod
   reporter: [
     ['html', { open: 'never' }],
     ['list'],
@@ -20,10 +20,12 @@ export default defineConfig({
       use: {
         baseURL: process.env.BASE_URL || 'https://gamdom.com',
         ...devices['Desktop Chrome'],
+        viewport: { width: 1920, height: 1080 },
         screenshot: 'only-on-failure',
-        trace: 'on-first-retry',
+        trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
       },
     },
+    // TODO: Add tablet and mobile tests
     {
       name: 'api',
       testDir: './tests/api',

@@ -1,28 +1,22 @@
+import { HeaderComponent } from '@components/header.component';
 import type { Page, Locator } from '@playwright/test';
+import { FooterComponent } from '@components/footer.component';
 
 export abstract class BasePage {
-  constructor(protected readonly page: Page) {}
-
   abstract readonly url: string;
+
+  readonly header: HeaderComponent;
+  readonly footer: FooterComponent;
+  readonly pageContent: Locator;
+
+  constructor(readonly page: Page) {
+    this.header = new HeaderComponent(page.getByTestId('headerContainer'));
+    this.footer = new FooterComponent(page.getByTestId('footerContainer'));
+    this.pageContent = page.getByTestId('page-content');
+  }
 
   async navigate(): Promise<void> {
     await this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
-    // Wait for SPA hydration — the site uses client-side rendering
-    await this.page.waitForLoadState('load');
-  }
-
-  async getTitle(): Promise<string> {
-    return this.page.title();
-  }
-
-  async waitForElement(locator: Locator, timeout = 10_000): Promise<void> {
-    await locator.waitFor({ state: 'visible', timeout });
-  }
-
-  async clickAndWaitForNavigation(locator: Locator): Promise<void> {
-    await Promise.all([
-      this.page.waitForLoadState('domcontentloaded'),
-      locator.click(),
-    ]);
+    await this.pageContent.waitFor({ state: 'visible' });
   }
 }
